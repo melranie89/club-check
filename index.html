@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>동아리 조회</title>
+</head>
+<body>
+  <h2>동아리 배정 조회</h2>
+
+  <input type="text" id="studentId" placeholder="학번">
+  <input type="text" id="name" placeholder="이름">
+  <button onclick="search()">조회</button>
+
+  <p id="result"></p>
+
+  <script>
+    async function search() {
+      const id = document.getElementById("studentId").value;
+      const name = document.getElementById("name").value;
+
+      const response = await fetch("https://sheetdb.io/api/v1/x201okynj85rk");
+      const data = await response.json();
+
+      const student = data.find(s => s.id === id && s.name === name);
+
+      if (student) {
+        document.getElementById("result").innerText =
+          "배정된 동아리: " + student.club;
+      } else {
+        document.getElementById("result").innerText =
+          "정보를 찾을 수 없습니다.";
+      }
+    }
+  </script>
+</body>
+</html>
